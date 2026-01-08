@@ -1,0 +1,12 @@
+---
+title: "week1-lab"
+format: html
+author: "Austin Martinez"
+date: 01/07/2026
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
