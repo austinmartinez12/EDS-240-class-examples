@@ -8,5 +8,57 @@ date: 01/07/2026
 ```{r}
 library(tidyverse)
 library(janitor)
+library(here)
+
 ```
+
+```{r}
+data <- read_csv(here::here("week1", "data", "stressor.csv"))
+```
+
+
+
+```{r}
+
+# Replace anything that is NOT a letter, number, or space ([^A-Za-z0-9\s])
+data$state <- str_replace_all(data$state, "[*@$()+.&#%!^_-]", "")
+```
+
+```{r}
+table(data$state)
+```
+
+```{r}
+# Replace anything that is NOT a letter, number, or space ([^A-Za-z0-9\s])
+data$stressor <- str_replace_all(data$stressor, "[*@$()+.&#%!^_-]", "")
+```
+
+```{r}
+table(data$stressor)
+```
+
+```{r}
+data <- data |>
+  clean_names()
+```
+
+```{r}
+long_data <- data|>
+  pivot_longer(cols = january_march:october_december,
+             names_to = "quarter_months",
+             values_to = "pct_stress") |>
+  mutate(quarter = case_when(
+    quarter_months =="january_march" ~ 1,
+    quarter_months =="april_june" ~ 2,
+    quarter_months =="july_september" ~ 3,
+    quarter_months =="october_december" ~ 4))
+
+```
+
+```{r}
+long_data |>
+  filter("United States" | "Other States")
+```
+
+
 
