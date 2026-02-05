@@ -1,0 +1,28 @@
+---
+title: "week4-lab"
+format: html
+---
+
+```{r}
+library(here)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+data <- read_csv(here("week4/data/co2_weekly_mlo.csv"), skip = 35, na = c(-999.99, "NA"))
+```
+
+```{r}
+data |>
+  group_by(year) |>
+  summarize(avg_avg = mean(average, na.rm = TRUE)) |>
+  ggplot(aes(year, avg_avg)) +
+  geom_col(fill = "dodgerblue") +
+  labs(x = "Year",
+       y= "Average Increase (ppm) since 1800",
+       title = "Mauna Loa CO2") +
+  theme_bw()
+```
+
